@@ -37,6 +37,17 @@ pipeline {
             }
         }
 
+        stage('Docker Login & Push') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh '''
+                    echo $PASSWORD | docker login -u $USERNAME --password-stdin
+                    docker push ${IMAGE_NAME}:${IMAGE_TAG}
+                    '''
+                }
+            }
+        }
+
         stage('Run Docker Container') {
             steps {
                 sh 'docker run -d -p 8085:8081 --name myapp_container ${IMAGE_NAME}:${IMAGE_TAG}'
