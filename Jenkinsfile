@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        SONAR_URL = 'http://34.87.243.235:9000'
+        SONAR_URL = 'http://34.27.111.131:9000'
         SONAR_TOKEN = credentials('sonar-token')  // Add this in Jenkins credentials
         IMAGE_NAME = "myapp"
         IMAGE_TAG = "latest"
