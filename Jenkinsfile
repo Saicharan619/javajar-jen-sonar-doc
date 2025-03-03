@@ -3,8 +3,8 @@ pipeline {
     environment {
         SONAR_URL = 'http://34.27.111.131:9000'
         SONAR_TOKEN = credentials('sonar-token')  // Add this in Jenkins credentials
-        IMAGE_NAME = "myappjekinspush"
-        IMAGE_TAG = "latest"
+        IMAGE_NAME = "saicharan12121/myappjekinspush"
+    IMAGE_TAG = "latest"
     }
 
     stages {
