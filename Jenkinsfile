@@ -38,7 +38,13 @@ pipeline {
               }
             }
           }
-        
+          stage('Ansible Deployment') {
+            steps {
+                sh '''
+                ansible-playbook dockerinstall.yml -e build_number=$BUILD_NUMBER
+                '''
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
@@ -51,7 +57,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh '''
                     echo $PASSWORD | docker login -u $USERNAME --password-stdin
-                    docker tag ${IMAGE_NAME} ${DOCKER_REPO}:${BUILD_NUMBER}
+                    // docker tag ${IMAGE_NAME} ${DOCKER_REPO}:${BUILD_NUMBER}
                     docker push ${IMAGE_NAME}:${BUILD_NUMBER}
                     '''
                 }
@@ -82,13 +88,7 @@ pipeline {
             }
         }
 
-        stage('Ansible Deployment') {
-            steps {
-                sh '''
-                ansible-playbook dockerinstall.yml -e build_number=$BUILD_NUMBER
-                '''
-            }
-        }
+      
     }
         
 
