@@ -9,13 +9,7 @@ pipeline {
       
 
     stages {
-         stage('Ansible Deployment') {
-            steps {
-                sh '''
-                ansible-playbook dockerinstall.yml -e build_number=$BUILD_NUMBER
-                '''
-            }
-        }
+        
         stage('Clone Repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/Saicharan619/mvnsonardoc.git'
@@ -82,7 +76,13 @@ pipeline {
             }
         }
 
-      
+       stage('Ansible Deployment') {
+            steps {
+                sh '''
+                ansible-playbook dockerinstall.yml -e build_number=$BUILD_NUMBER
+                '''
+            }
+        }
 
 
         stage('Run Docker Container') {
