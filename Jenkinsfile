@@ -80,7 +80,7 @@ pipeline {
                 sh 'docker run -d -p 8085:8081 --name myapp_container ${IMAGE_NAME}:${IMAGE_TAG}'
             }
         }
-    }
+
         stage("Ansible Deployment") {
             steps {
                 sh '''
@@ -88,6 +88,8 @@ pipeline {
                 '''
             }
         }
+    }
+        
 
     post {
         success {
