@@ -6,10 +6,8 @@ pipeline {
         IMAGE_NAME = "saicharan12121/myappjekinspush"
    
     }
-      
 
     stages {
-        
         stage('Clone Repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/Saicharan619/mvnsonardoc.git'
@@ -76,14 +74,6 @@ pipeline {
             }
         }
 
-       stage('Ansible Deployment') {
-            steps {
-                sh '''
-                ansible-playbook dockerinstall.yml -e build_number=$BUILD_NUMBER
-                '''
-            }
-        }
-
 
         stage('Run Docker Container') {
             steps {
@@ -91,7 +81,13 @@ pipeline {
             }
         }
 
-       
+        stage('Ansible Deployment') {
+            steps {
+                sh '''
+                ansible-playbook dockerinstall.yml -e build_number=$BUILD_NUMBER
+                '''
+            }
+        }
     }
         
 
