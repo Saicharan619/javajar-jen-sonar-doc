@@ -22,7 +22,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {  // This automatically sets SONAR_URL and SONAR_TOKEN
+                withSonarQubeEnv('sonar') {  // This automatically sets SONAR_URL and SONAR_TOKEN
                 sh '''
                 mvn sonar:sonar \
                     -Dsonar.projectKey=my-project \
