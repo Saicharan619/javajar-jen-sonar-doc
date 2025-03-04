@@ -56,6 +56,23 @@ pipeline {
                 }
             }
         }
+        stage("Check Connection") {
+            steps {
+                sh '''
+                ansible-inventory --graph
+                '''
+            }
+        }
+
+        stage("Ping Ansible") {
+            steps {
+                sh '''
+                sleep 10
+                ansible all -m ping
+                '''
+            }
+        }
+
 
         stage('Run Docker Container') {
             steps {
