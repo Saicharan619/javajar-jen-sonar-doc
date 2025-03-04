@@ -22,12 +22,14 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
+                withSonarQubeEnv('SonarQube') {  // This automatically sets SONAR_URL and SONAR_TOKEN
                 sh '''
                 mvn sonar:sonar \
                     -Dsonar.projectKey=my-project \
                     -Dsonar.host.url=${SONAR_URL} \
                     -Dsonar.token=${SONAR_TOKEN}
                 '''
+               }
             }
         }
                stage('Quality Gate') {
