@@ -42,7 +42,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+                sh 'docker build -t ${IMAGE_NAME} .'
             }
         }
 
@@ -51,7 +51,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh '''
                     echo $PASSWORD | docker login -u $USERNAME --password-stdin
-                    docker push ${IMAGE_NAME}:${IMAGE_TAG}
+                    docker push ${IMAGE_NAME}:${BUILD_NUmber}
                     '''
                 }
             }
@@ -77,7 +77,7 @@ pipeline {
 
         stage('Run Docker Container') {
             steps {
-                sh 'docker run -d -p 8085:8081 --name myapp_container ${IMAGE_NAME}:${IMAGE_TAG}'
+                sh 'docker run -d -p 8085:8081 --name myapp_container ${IMAGE_NAME}:${BUILD_NUMBER}'
             }
         }
 
