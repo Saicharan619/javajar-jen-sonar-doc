@@ -31,20 +31,13 @@ pipeline {
                }
             }
         }
-               stage('Quality Gate') {
+       stage("Quality Gate") {
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                    script {
-                        def qualityGate = waitForQualityGate()
-                        if (qualityGate.status != 'OK') {
-                            error "❌ Quality Gate Failed: ${qualityGate.status}"
-                        } else {
-                            echo "✅ Quality Gate Passed!"
-                        }
-                    }
-                }
+              timeout(time: 10, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+              }
             }
-        }
+          }
         
 
         stage('Build Docker Image') {
