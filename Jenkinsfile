@@ -74,6 +74,14 @@ pipeline {
             }
         }
 
+         stage('Ansible Deployment') {
+            steps {
+                sh '''
+                ansible-playbook dockerinstall.yml -e build_number=$BUILD_NUMBER
+                '''
+            }
+        }
+
 
         stage('Run Docker Container') {
             steps {
@@ -81,13 +89,7 @@ pipeline {
             }
         }
 
-        stage('Ansible Deployment') {
-            steps {
-                sh '''
-                ansible-playbook dockerinstall.yml -e build_number=$BUILD_NUMBER
-                '''
-            }
-        }
+       
     }
         
 
