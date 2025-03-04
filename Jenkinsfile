@@ -26,7 +26,6 @@ pipeline {
                 sh '''
                 mvn sonar:sonar \
                     -Dsonar.projectKey=my-project \
-                    -Dsonar.host.url=${SONAR_URL} \
                     -Dsonar.token=${SONAR_TOKEN}
                 '''
                }
