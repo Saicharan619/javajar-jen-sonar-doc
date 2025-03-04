@@ -6,7 +6,7 @@ pipeline {
         IMAGE_NAME = "saicharan12121/myappjekinspush"
    
     }
-       staage('Ansible Deployment') {
+       stage('Ansible Deployment') {
             steps {
                 sh '''
                 ansible-playbook dockerinstall.yml -e build_number=$BUILD_NUMBER
