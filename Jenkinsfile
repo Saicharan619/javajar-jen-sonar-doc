@@ -4,6 +4,7 @@ pipeline {
         SONAR_URL = 'http://34.27.111.131:9000'
         SONAR_TOKEN = credentials('sonar-token')  // Add this in Jenkins credentials
         IMAGE_NAME = "saicharan12121/myappjekinspush"
+        BUILD_NUMBER = "${env.BUILD_NUMBER}"
    
     }
 
@@ -48,7 +49,8 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t ${IMAGE_NAME} .'
+                sh 'docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} .'
+
             }
         }
 
@@ -57,7 +59,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh '''
                     echo $PASSWORD | docker login -u $USERNAME --password-stdin
-                    // docker tag ${IMAGE_NAME} ${DOCKER_REPO}:${BUILD_NUMBER}
+                    docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${BUILD_NUMBER}
                     docker push ${IMAGE_NAME}:${BUILD_NUMBER}
                     '''
                 }
