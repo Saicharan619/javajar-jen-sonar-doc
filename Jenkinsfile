@@ -43,11 +43,13 @@ pipeline {
           }
        
         stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} .'
-
-            }
-        }
+    steps {
+        sh '''
+        docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} .
+        docker tag ${IMAGE_NAME}:${BUILD_NUMBER} ${IMAGE_NAME}:latest
+        '''
+    }
+}
         stage('Docker Login & Push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
