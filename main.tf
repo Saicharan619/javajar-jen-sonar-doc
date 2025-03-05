@@ -20,7 +20,9 @@ resource "google_compute_instance" "terrainstancesai" {
 
   network_interface {
     network = "default"
- access_config {}                                  #assign external IP
+ access_config {
+
+ }                                  #assign external IP
 
 }
 }
