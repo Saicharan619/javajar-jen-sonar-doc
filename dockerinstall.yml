@@ -35,7 +35,7 @@
         msg: "Docker Installed Successfully - {{ docker_version.stdout }}"
         
     - name: docker pull image
-      command: docker pull saicharan12121/myappjekinspush:{{ build_number }}
+      command: docker pull saicharan12121/javasample1:{{ build_number }}
     
     - name: container run with image
-      command: docker run -d -p 8085:8081 --name container saicharan12121/myappjekinspush:{{ build_number }}
+      command: docker run -d -p 8085:8081 --name container saicharan12121/javasample1:{{ build_number }}
