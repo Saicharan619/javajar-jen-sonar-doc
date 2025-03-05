@@ -109,11 +109,7 @@ pipeline {
         }
 
 
-        stage('Run Docker Container') {
-            steps {
-                sh 'docker run -d -p 8085:8081 --name myapp_container ${IMAGE_NAME}:${BUILD_NUMBER}'
-            }
-        }
+        
 
       
     }
