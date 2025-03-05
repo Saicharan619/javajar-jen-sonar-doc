@@ -11,11 +11,6 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repository') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Saicharan619/mvnsonardoc.git'
-            }
-        }
 
         stage('Build with Maven') {
             steps {
