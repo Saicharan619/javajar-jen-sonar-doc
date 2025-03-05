@@ -59,16 +59,31 @@ pipeline {
                 }
             }
         }
-         stage('Terraform Apply') {
-            steps {
+
+
+
+        stage('Terraform Workspace Setup') {
+    steps {
+        sh '''
+        cd terraform || exit 1
+        rm -rf .terraform .terraform.lock.hcl
+        terraform init -upgrade
+        terraform plan
+        terraform apply -auto-approve
+        '''
+    }
+}
+
+        //  stage('Terraform Apply') {
+        //     steps {
            
-                 sh 'terraform init '
-                 sh 'terraform plan'
-                sh 'terraform apply -auto-approve'
+        //          sh 'terraform init '
+        //          sh 'terraform plan'
+        //         sh 'terraform apply -auto-approve'
         
-               // sh 'terraform destroy -auto-approve' //
-            }
-        }
+        //        // sh 'terraform destroy -auto-approve' //
+        //     }
+        // }
           
         
         stage("Check Connection") {
