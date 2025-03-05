@@ -68,7 +68,6 @@ pipeline {
         stage("Check Connection") {
             steps {
                 sh '''
-                cd /etc/ansible/dynamic/
                 ansible-inventory --graph
                 '''
             }
