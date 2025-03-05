@@ -65,9 +65,7 @@ pipeline {
         stage('Terraform Workspace Setup') {
     steps {
         sh '''
-        cd terraform || exit 1
-        rm -rf .terraform .terraform.lock.hcl
-        terraform init -upgrade
+        terraform init 
         terraform plan
         terraform apply -auto-approve
         '''
