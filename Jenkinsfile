@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    
     tools {
         terraform 'terra' // This will install Terraform automatically in Jenkins
     }
