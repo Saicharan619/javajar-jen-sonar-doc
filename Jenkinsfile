@@ -39,28 +39,13 @@ pipeline {
               }
             }
           }
-        stage('Terraform Apply') {
-            steps {
-                sh 'terraform apply -auto-approve'
-               // sh 'terraform destroy -auto-approve' //
-            }
-        }
-        
-          stage('Ansible Deployment') {
-            steps {
-                sh '''
-                ansible-playbook dockerinstall.yml -e build_number=$BUILD_NUMBER
-                '''
-            }
-        }
-
+       
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} .'
 
             }
         }
-
         stage('Docker Login & Push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -72,6 +57,14 @@ pipeline {
                 }
             }
         }
+         stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply -auto-approve'
+               // sh 'terraform destroy -auto-approve' //
+            }
+        }
+          
+        
         stage("Check Connection") {
             steps {
                 sh '''
@@ -85,6 +78,13 @@ pipeline {
                 sh '''
                 sleep 10
                 ansible all -m ping
+                '''
+            }
+        }
+        stage('Ansible Deployment') {
+            steps {
+                sh '''
+                ansible-playbook dockerinstall.yml -e build_number=$BUILD_NUMBER
                 '''
             }
         }
