@@ -33,3 +33,4 @@
     - name: Show Docker Version
       debug:
         msg: "Docker Installed Successfully - {{ docker_version.stdout }}"
+        
