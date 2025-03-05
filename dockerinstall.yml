@@ -1,6 +1,6 @@
 ---
 - name: Install Docker in CentOS 9
-  hosts: webservers
+  hosts: all
   become: yes   # sudo permissions
 
   tasks:
